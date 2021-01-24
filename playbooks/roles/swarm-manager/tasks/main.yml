@@ -1,0 +1,14 @@
+- name: Ensure python docker module is installed
+  pip:
+    state: present
+    name: docker
+
+- name: Ensure manager is initialized
+  docker_swarm:
+    state: present
+    advertise_addr: '{{ advertise_addr }}'
+
+- name: Register swarm info
+  docker_swarm_info: {}
+  register: swarm_info
+

@@ -1,0 +1,15 @@
+- name: Ensure hostname is set
+  hostname:
+    name: '{{ hostname }}'
+
+- name: Ensure packages are updated and upgraded
+  apt:
+    state: latest
+    name: "*"
+    update_cache: true
+
+- name: Ensure pip is installed
+  package:
+    state: present
+    name: python3-pip
+

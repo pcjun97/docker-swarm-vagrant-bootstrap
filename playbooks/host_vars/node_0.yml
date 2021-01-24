@@ -1,0 +1,4 @@
+ansible_host: 10.0.10.2
+ansible_ssh_user: vagrant
+ansible_ssh_private_key_file: ../.vagrant/machines/node_0/virtualbox/private_key
+docker_swarm_advertise_addr: 10.0.10.2

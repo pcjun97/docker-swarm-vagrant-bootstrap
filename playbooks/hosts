@@ -1,0 +1,10 @@
+[swarm_managers]
+node_0
+
+[swarm_workers]
+node_1
+node_2
+
+[swarm:children]
+swarm_managers
+swarm_workers

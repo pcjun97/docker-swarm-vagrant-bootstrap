@@ -1,0 +1,10 @@
+- name: Ensure python docker module is installed
+  pip:
+    state: present
+    name: docker
+
+- name: Ensure worker has joined the swarm
+  docker_swarm:
+    state: join
+    join_token: '{{ join_token }}'
+    remote_addrs: '{{ remote_addrs }}'

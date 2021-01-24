@@ -1,0 +1,44 @@
+- hosts: swarm
+  become: true
+  vars:
+    hostname: '{{ inventory_hostname }}'
+  roles:
+    - common
+    - docker
+
+- hosts: swarm_managers
+  become: true
+  vars:
+    advertise_addr: '{{ docker_swarm_advertise_addr }}'
+  roles:
+    - swarm-manager
+
+- hosts: swarm_workers
+  become: true
+  vars:
+    join_token: "{{ hostvars['node_0']['swarm_info']['swarm_facts']['JoinTokens']['Worker'] }}"
+    remote_addrs: ["{{ hostvars['node_0']['docker_swarm_advertise_addr'] }}"]
+  roles:
+    - swarm-worker
+
+- hosts: node_0
+  become: true
+  tasks:
+    - name: Ensure override directory exist
+      file:
+        state: directory
+        path: /etc/systemd/system/docker.service.d
+    - name: Ensure docker.service override is added
+      notify: Restart docker service
+      copy:
+        dest: /etc/systemd/system/docker.service.d/overide.conf
+        content: |
+          [Service]
+          ExecStart=
+          ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375
+  handlers:
+    - name: Restart docker service
+      systemd:
+        name: docker
+        state: restarted
+        daemon_reload: yes
