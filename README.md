@@ -25,7 +25,7 @@ ansible-playbook swarm.yml
 The cluster will expose the unencrypted docker socket and port forward it to the port 2378 on your host.
 Updating the `DOCKER_HOST` environment variable in the host's shell will allows execution of `docker` commands without the need to connect to the cluster nodes via ssh.
 
-This repo includes two examples of docker compose file for [Traefik](https://github.com/traefik/traefik) and [portainer](https://github.com/portainer/portainer).
+This repo includes two examples of docker compose file for [Traefik](https://github.com/traefik/traefik) and [Portainer](https://github.com/portainer/portainer).
 
 ```sh
 export DOCKER_HOST=tcp://127.0.0.1:2378
